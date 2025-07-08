@@ -1,2 +1,2 @@
-# AI_With_Shanthi
+# ai-with-shanthi
 Exploring artificial intelligence through self-guided experimentation and curiosity.
