@@ -3,81 +3,643 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Portfolio</title>
+  <title>AI with Shanthi - Portfolio</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-    .linkedin-posts {
-      margin-top: 40px;
-    }
-    .linkedin-posts h2 {
-      color: #0072b1; /* LinkedIn Blue */
-    }
-    .linkedin-posts ul {
-      list-style-type: none;
-      padding-left: 0;
-    }
-    .linkedin-posts li {
-      margin-bottom: 10px;
-    }
-    .linkedin-posts a {
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: #333;
-      text-decoration: none;
-      font-weight: bold;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
-    .linkedin-posts a:hover {
-      text-decoration: underline;
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.3); }
+      to { text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 30px rgba(255,255,255,0.5); }
+    }
+
+    .hero p {
+      font-size: 1.5rem;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 15px 40px;
+      background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(255,107,107,0.3);
+      animation: pulse 2s infinite;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(255,107,107,0.4);
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 8px 25px rgba(255,107,107,0.3); }
+      50% { box-shadow: 0 8px 25px rgba(255,107,107,0.5); }
+      100% { box-shadow: 0 8px 25px rgba(255,107,107,0.3); }
+    }
+
+    /* Content Section */
+    .content {
+      background: white;
+      padding: 80px 0;
+      position: relative;
+    }
+
+    .section {
+      margin-bottom: 80px;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.8s ease;
+    }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section h2 {
+      font-size: 2.5rem;
+      color: #2c3e50;
+      margin-bottom: 30px;
+      text-align: center;
+      position: relative;
+    }
+
+    .section h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      border-radius: 2px;
+    }
+
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .card-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .card h3 {
+      font-size: 1.5rem;
+      color: #2c3e50;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .card p {
+      color: #666;
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      padding: 10px 20px;
+      background: rgba(102, 126, 234, 0.1);
+      border-radius: 25px;
+      margin-top: 10px;
+    }
+
+    .card-link:hover {
+      background: rgba(102, 126, 234, 0.2);
+      transform: translateX(5px);
+    }
+
+    .card-link::after {
+      content: '→';
+      margin-left: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .card-link:hover::after {
+      transform: translateX(5px);
+    }
+
+    /* Governance Cards Special Styling */
+    .governance-card {
+      background: linear-gradient(135deg, #e8f5e8 0%, #d4e9d4 100%);
+      border-left: 5px solid #2196F3;
+    }
+
+    .governance-card h3 {
+      color: #2196F3;
+    }
+
+    .governance-tag {
+      display: inline-block;
+      background: #2196F3;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    /* Security Cards Special Styling */
+    .security-card {
+      background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+      border-left: 5px solid #FF9800;
+    }
+
+    .security-card h3 {
+      color: #FF9800;
+    }
+
+    .security-tag {
+      display: inline-block;
+      background: #FF9800;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    /* Compliance Cards Special Styling */
+    .compliance-card {
+      background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+      border-left: 5px solid #9C27B0;
+    }
+
+    .compliance-card h3 {
+      color: #9C27B0;
+    }
+
+    .compliance-tag {
+      display: inline-block;
+      background: #9C27B0;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    /* Floating Elements */
+    .floating-elements {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .floating-element {
+      position: absolute;
+      opacity: 0.1;
+      animation: floatRandom 15s linear infinite;
+    }
+
+    @keyframes floatRandom {
+      0% { transform: translateY(100vh) rotate(0deg); }
+      100% { transform: translateY(-100px) rotate(360deg); }
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero p {
+        font-size: 1.2rem;
+      }
+      
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .section h2 {
+        font-size: 2rem;
+      }
+    }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: rgba(255,255,255,0.2);
+      z-index: 1000;
+    }
+
+    .scroll-progress {
+      height: 100%;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
 <body>
-
-  <h1>👋 Welcome to AI with Shanthi</h1>
-  <p>I’m sharing discussions, linkedin posts, ideas,and projects on AI.</p>
-
-  <!-- 🔗 LinkedIn Posts Section -->
-  <div class="linkedin-posts">
-    <h2>Responsible AI </h2>
-    <ul>
-      <li>
-        <a href="https://www.linkedin.com/feed/update/urn:li:activity:7346005088106094592/" target="_blank">
-           Fairness
-        </a>
-      </li>
-      <li>
-        <a href="https://www.linkedin.com/feed/update/urn:li:activity:7346735766473011200/" target="_blank">
-           Transparency
-        </a>
-      </li>
-      <li>
-        <a href="https://www.linkedin.com/feed/update/urn:li:activity:7348161564757118976/" target="_blank">
-          Accountability
-        </a>
-      </li>
-    </ul>
+  <div class="scroll-indicator">
+    <div class="scroll-progress"></div>
   </div>
-<div class="linkedin-posts research papers">
-    <h2>🔗 My LinkedIn Post on Research Papers</h2>
-    <ul>
-      <li>
-        <a href="https://www.linkedin.com/feed/update/urn:li:activity:7347072979035463682/" target="_blank">
-           Towards Optimizing the Costs of LLM Usage --> QC-Opt
-        </a>
-      </li>
-      <li>
-        <a href="https://www.linkedin.com/feed/update/urn:li:activity:7346735766473011200/" target="_blank">
-           LLMProxy: Making LLM Access Faster, Cheaper, and Smarter  
-            https://arxiv.org/html/2410.11857v1
-        </a>
-      </li>
-      <li>
-        <a href="https://www.linkedin.com/feed/update/urn:li:activity:7347842060499984384/" target="_blank">
-          Comparison LLM Proxy & Fine Grained Optimization QC-Opt
-        </a>
-      </li>
-    </ul>
+
+  <div class="floating-elements">
+    <div class="floating-element" style="left: 10%; font-size: 2rem;">🤖</div>
+    <div class="floating-element" style="left: 70%; font-size: 1.5rem; animation-delay: -5s;">💡</div>
+    <div class="floating-element" style="left: 30%; font-size: 1.8rem; animation-delay: -10s;">🚀</div>
+    <div class="floating-element" style="left: 80%; font-size: 1.3rem; animation-delay: -15s;">⚡</div>
   </div>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>👋 AI with Shanthi</h1>
+        <p>Exploring the frontiers of Artificial Intelligence through responsible innovation, cutting-edge research, and meaningful discussions.</p>
+        <a href="#content" class="cta-button">Explore My Work</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="content" class="content">
+    <div class="container">
+      
+      <div class="section">
+        <h2>🛡️ AI Ethics</h2>
+        <p style="text-align: center; font-size: 1.2rem; color: #666; margin-bottom: 40px;">
+          Exploring the moral foundations of AI development and deployment for a responsible technological future.
+        </p>
+        <div class="card-grid">
+          <div class="card">
+            <span class="card-icon">⚖️</span>
+            <h3>Fairness in AI</h3>
+            <p>Exploring how we can eliminate bias and ensure equitable outcomes across all AI applications, making technology work for everyone.</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7346005088106094592/" target="_blank" class="card-link">
+              Read Full Post
+            </a>
+          </div>
+          
+          <div class="card">
+            <span class="card-icon">🔍</span>
+            <h3>Transparency</h3>
+            <p>Demystifying AI decision-making processes and creating explainable systems that build trust through understanding.</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7346735766473011200/" target="_blank" class="card-link">
+              Read Full Post
+            </a>
+          </div>
+          
+          <div class="card">
+            <span class="card-icon">🎯</span>
+            <h3>Accountability</h3>
+            <p>Establishing frameworks for responsible AI deployment and ensuring systems remain aligned with human values and ethics.</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7348161564757118976/" target="_blank" class="card-link">
+              Read Full Post
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>🏛️ AI Governance</h2>
+        <p style="text-align: center; font-size: 1.2rem; color: #666; margin-bottom: 40px;">
+          Developing frameworks and policies to guide responsible AI development and deployment at scale.
+        </p>
+        <div class="card-grid">
+          <div class="card governance-card">
+            <div class="governance-tag">POLICY</div>
+            <span class="card-icon">📜</span>
+            <h3>AI Policy Framework</h3>
+            <p>Comprehensive policies and guidelines for AI development, focusing on regulatory compliance and ethical standards across organizations.</p>
+            <a href="#" class="card-link">
+              Coming Soon
+            </a>
+          </div>
+          
+          <div class="card governance-card">
+            <div class="governance-tag">OVERSIGHT</div>
+            <span class="card-icon">🔍</span>
+            <h3>AI Oversight Mechanisms</h3>
+            <p>Establishing monitoring and review processes to ensure AI systems operate within defined ethical and legal boundaries.</p>
+            <a href="#" class="card-link">
+              Coming Soon
+            </a>
+          </div>
+          
+          <div class="card governance-card">
+            <div class="governance-tag">STANDARDS</div>
+            <span class="card-icon">🎖️</span>
+            <h3>Industry Standards</h3>
+            <p>Contributing to the development of industry-wide AI standards and best practices for responsible technology deployment.</p>
+            <a href="#" class="card-link">
+              Coming Soon
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>🔐 AI Safety & Security</h2>
+        <p style="text-align: center; font-size: 1.2rem; color: #666; margin-bottom: 40px;">
+          Ensuring AI systems are secure, robust, and aligned with human values to prevent unintended consequences.
+        </p>
+        <div class="card-grid">
+          <div class="card security-card">
+            <div class="security-tag">SAFETY</div>
+            <span class="card-icon">🛡️</span>
+            <h3>AI Safety Protocols</h3>
+            <p>Developing comprehensive safety measures and fail-safes to prevent AI systems from causing harm or operating outside intended parameters.</p>
+            <a href="#" class="card-link">
+              Coming Soon
+            </a>
+          </div>
+          
+          <div class="card security-card">
+            <div class="security-tag">SECURITY</div>
+            <span class="card-icon">🔒</span>
+            <h3>AI Security Framework</h3>
+            <p>Protecting AI systems from adversarial attacks, data poisoning, and other security threats that could compromise system integrity.</p>
+            <a href="#" class="card-link">
+              Coming Soon
+            </a>
+          </div>
+          
+          <div class="card security-card">
+            <div class="security-tag">ALIGNMENT</div>
+            <span class="card-icon">🎯</span>
+            <h3>Value Alignment</h3>
+            <p>Ensuring AI systems remain aligned with human values and intentions throughout their operational lifecycle and evolution.</p>
+            <a href="#" class="card-link">
+              Coming Soon
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>📋 AI Compliance</h2>
+        <p style="text-align: center; font-size: 1.2rem; color: #666; margin-bottom: 40px;">
+          Navigating the complex landscape of AI regulations and ensuring adherence to legal and ethical requirements.
+        </p>
+        <div class="card-grid">
+          <div class="card compliance-card">
+            <div class="compliance-tag">REGULATION</div>
+            <span class="card-icon">⚖️</span>
+            <h3>Regulatory Compliance</h3>
+            <p>Understanding and implementing compliance measures for emerging AI regulations including GDPR, AI Act, and other regional requirements.</p>
+            <a href="#" class="card-link">
+              Coming Soon
+            </a>
+          </div>
+          
+          <div class="card compliance-card">
+            <div class="compliance-tag">AUDIT</div>
+            <span class="card-icon">🔍</span>
+            <h3>AI Audit Processes</h3>
+            <p>Developing systematic approaches to audit AI systems for compliance, bias, and performance against established standards.</p>
+            <a href="#" class="card-link">
+              Coming Soon
+            </a>
+          </div>
+          
+          <div class="card compliance-card">
+            <div class="compliance-tag">DOCUMENTATION</div>
+            <span class="card-icon">📄</span>
+            <h3>Compliance Documentation</h3>
+            <p>Creating comprehensive documentation frameworks to demonstrate AI system compliance and facilitate regulatory reviews.</p>
+            <a href="#" class="card-link">
+              Coming Soon
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>📚 Research Papers & Insights</h2>
+        <p style="text-align: center; font-size: 1.2rem; color: #666; margin-bottom: 40px;">
+          Deep dives into cutting-edge research that's shaping the future of AI optimization and accessibility.
+        </p>
+        <div class="card-grid">
+          <div class="card research-card">
+            <div class="research-tag">OPTIMIZATION</div>
+            <span class="card-icon">⚡</span>
+            <h3>QC-Opt: Optimizing LLM Costs</h3>
+            <p>Revolutionary approach to reducing Large Language Model operational costs while maintaining performance through intelligent optimization strategies.</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7347072979035463682/" target="_blank" class="card-link">
+              Read Analysis
+            </a>
+          </div>
+          
+          <div class="card research-card">
+            <div class="research-tag">INFRASTRUCTURE</div>
+            <span class="card-icon">🚀</span>
+            <h3>LLMProxy: Smarter Access</h3>
+            <p>Making LLM access faster, cheaper, and more intelligent through innovative proxy architecture and caching mechanisms.</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7346735766473011200/" target="_blank" class="card-link">
+              Read Analysis
+            </a>
+          </div>
+          
+          <div class="card research-card">
+            <div class="research-tag">COMPARISON</div>
+            <span class="card-icon">📊</span>
+            <h3>LLMProxy vs QC-Opt</h3>
+            <p>Comprehensive comparison between proxy-based optimization and fine-grained cost optimization approaches in LLM deployment.</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7347842060499984384/" target="_blank" class="card-link">
+              Read Comparison
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    // Scroll progress indicator
+    window.addEventListener('scroll', () => {
+      const scrolled = (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+      document.querySelector('.scroll-progress').style.width = scrolled + '%';
+    });
+
+    // Smooth scrolling for CTA button
+    document.querySelector('.cta-button').addEventListener('click', (e) => {
+      e.preventDefault();
+      document.querySelector('#content').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Intersection Observer for animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.section').forEach(section => {
+      observer.observe(section);
+    });
+
+    // Add hover effects for cards
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.style.transform = 'translateY(-10px) scale(1.02)';
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'translateY(0) scale(1)';
+      });
+    });
+
+    // Dynamic floating elements
+    function createFloatingElement() {
+      const elements = ['🤖', '💡', '🚀', '⚡', '🔮', '🌟', '💫', '🎯'];
+      const element = document.createElement('div');
+      element.className = 'floating-element';
+      element.textContent = elements[Math.floor(Math.random() * elements.length)];
+      element.style.left = Math.random() * 100 + '%';
+      element.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+      element.style.animationDuration = (Math.random() * 10 + 10) + 's';
+      element.style.animationDelay = '-' + Math.random() * 10 + 's';
+      
+      document.querySelector('.floating-elements').appendChild(element);
+      
+      setTimeout(() => {
+        element.remove();
+      }, 20000);
+    }
+
+    // Create floating elements periodically
+    setInterval(createFloatingElement, 3000);
+  </script>
 </body>
 </html>
